@@ -22,20 +22,28 @@ class Todo extends Component{
 
     renderTodos = () =>{
         const data = this.state.todosArray;
-        const todoList = data.map((todo)=>(
-            <div key={todo.id}>
-                <li key={todo.content}>
-			    Todo: {todo.content}
-				<ul>
-				<li key={todo.completed}>
-					completed : {todo.completed.toString()}
-				</li>
-				</ul>
-			</li>
-            </div>
-          
-            ))
-        return todoList;
+        if(data.length > 0){
+            const todoList = data.map((todo)=>(
+                <div key={todo.id}>
+                    <li key={todo.content}>
+                    Todo: {todo.content}
+                    <ul>
+                    <li key={todo.completed}>
+                        completed : {todo.completed.toString()}
+                    </li>
+                    <li key={todo.deleted}>
+                        deleted : {todo.deleted.toString()}
+                    </li>
+                    </ul>
+                </li>
+                </div>
+              
+                ))
+            return todoList;
+        }
+      else{
+          return;
+      }
     }
 
     renderLogout = async ()=>{
@@ -44,7 +52,7 @@ class Todo extends Component{
 
     render(){
         console.log("todos are:", this.state.todosArray)
-
+        console.log("username in state is:", this.state.username)
         return(
             <div>
                 <Link to ="/">Return to home</Link>

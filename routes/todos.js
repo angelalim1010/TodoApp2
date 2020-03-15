@@ -11,7 +11,7 @@ const API_URL = process.env.API_URL;
 router.get("/", async (req, res, next) => {
 	try {
 		if (req.signedCookies.Authentication === undefined) {
-			res.render("error", {
+			res.json({
 				message: "Error. User not authenticated.",
 				error: { status: 401 }
 			});
@@ -21,13 +21,19 @@ router.get("/", async (req, res, next) => {
 					Cookie: `token=${req.signedCookies.Authentication}`
 				}
 			});
-			res.status(200).json(response.data.filter(x=> !x.deleted));
+		
+			res.status(200).json(
+				response.data.filter(x=> !x.deleted)
+				// response.data
+				);
+	
 		}
 	} catch (err) {
 		if (err.response.status === 404) {
-			res.json("error");
+			res.json([]);
+		} else {
+			console.log(err);
 		}
-		console.log(err);
 	}
 });
 

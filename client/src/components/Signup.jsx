@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { newSignup } from "../actions/authActions";
+import { Redirect } from "react-router-dom";
+
+import { createUsername } from "../actions/authActions";
 
 class Signup extends Component{
     constructor(){
@@ -9,7 +11,7 @@ class Signup extends Component{
             redirect: false
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleLogin = this.handleLogin.bind(this);
+        this.handleSignup = this.handleSignup.bind(this);
     }
 
     handleChange = async(e) => {
@@ -23,15 +25,15 @@ class Signup extends Component{
         const user = {
             username: this.state.username
         }
-        await newSignup(user.username)
+        await createUsername(user.username)
         this.setState({redirect:true})
     }
 
     render(){
         console.log("username is:", this.state.username)
-        // if(this.state.redirect === true){
-        //     return <Redirect to = "/todo"/>
-        // }
+        if(this.state.redirect === true){
+            return <Redirect to = "/todo"/>
+        }
         return(
             <form>
                 <label>

@@ -13,7 +13,7 @@ export const authLogin = async(name)=>{
     console.log("helllooooooo")
 }
 
-export const newSignup = async(name)=>{
+export const createUsername = async(name)=>{
     try{
         await axios.post('/users',{
             username: name

@@ -44,11 +44,7 @@ router.post("/", async(req,res,next)=>{
 			signed: true,
 			httpOnly: true
 		});
-		res.cookie("user", req.body.username, {
-			signed: true,
-			httpOnly: true
-		});
-		res.status(200);
+		res.status(200).json({ username: req.body.username });
 	}catch(err){
 		if (err.response.status === 400) {
 			res.render("error", {
