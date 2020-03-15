@@ -22,24 +22,31 @@ class Todo extends Component{
             todosArray: todos.data
         })
     }
-
     renderTodos = () =>{
         const data = this.state.todosArray;
         if(data.length > 0){
             const todoList = data.map((todo)=>(
-                <div key={todo.id}>
-                    <li key={todo.content}>
-                    Todo: {todo.content}
-                    <ul>
-                    <li key={todo.completed}>
-                        completed : {todo.completed.toString()}
+                <div>
+                    <div key={todo.id}>
+                        <li key={todo.content}>
+                        Todo: {todo.content}
+                        <ul>
+                        <li key={todo.completed}>
+                            completed : {todo.completed.toString()}
+                        </li>
+                        <li>
+                            deleted : {todo.deleted.toString()}
+                        </li>
+                        </ul>
                     </li>
-                    <li>
-                        deleted : {todo.deleted.toString()}
-                    </li>
-                    </ul>
-                </li>
-                </div>
+                    </div>
+                <div>
+                    <form>
+                        <input type="submit" value="Delete Todo" onClick={()=>deleteTodo(todo.id)}/>
+                    </form>
+                    </div>
+                
+            </div>
               
                 ))
             return todoList;
@@ -67,7 +74,7 @@ class Todo extends Component{
         e.preventDefault();
         await createNewTodo(this.state.content)
         this.refreshPage()    
-}
+    }
 
     render(){
         console.log("todos are:", this.state.todosArray)

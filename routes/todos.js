@@ -129,7 +129,7 @@ router.get("/:id/delete", async(req,res,next)=>{
 					Cookie: `token=${req.signedCookies.Authentication}`
 				}
 			});
-			res.status(200).redirect("/todos");
+			res.status(200).json("delete successful");
 		}
 	} catch (err) {
 		console.log(err);

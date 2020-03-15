@@ -2,12 +2,14 @@ import axios from "axios";
 
 
 export const getTodo = async ()=>{
+    console.log("waiting to get todos")
     try{
         return await axios.get("/todos")
     }
     catch(e){
         console.log(e.response)
     }
+    console.log("got todos")
 }
 
 export const createNewTodo = async(todo) =>{
@@ -28,6 +30,13 @@ export const updateTodo = async(todo)=>{
 
 }
 
-export const deleteTodo = async(todo)=>{
-
+export const deleteTodo = async(todo_id)=>{
+    try{
+        await axios.get(`/todos/${todo_id}/delete`,{
+            id: todo_id
+        })
+    }
+    catch(e){
+        console.log(e.response)
+    }
 }
