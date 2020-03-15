@@ -40,11 +40,10 @@ router.post("/login", async(req,res,next)=>{
 
 //GET for logout 
 // /auth/logout
-router.get("/logout", async(req,res,next)=>{
+router.delete("/logout", async(req,res,next)=>{
 	try {
 		res.clearCookie("Authentication");
-		res.clearCookie("user");
-		res.status(200);
+		res.status(200).json({ status: "ok" });
 		console.log("logout successfully");
 	} catch (err) {
 		console.log(err);

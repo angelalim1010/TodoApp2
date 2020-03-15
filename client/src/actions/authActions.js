@@ -25,5 +25,12 @@ export const newSignup = async(name)=>{
 }
 
 export const authLogout = async()=>{
-    await axios.get('/auth/logout')
+    try{
+        console.log("waiting to logout")
+        await axios.delete('/auth/logout')
+        console.log("logged out")
+    }
+    catch(e){
+        console.log(e.response)
+    }
 }
