@@ -61,7 +61,7 @@ router.get("/:id", async (req, res, next) => {
 
 
 //post new todo
-router.post("/", async(req, res, next)=>{
+router.post("/create", async(req, res, next)=>{
 	try {
 		if (req.signedCookies.Authentication === undefined) {
 			res.render("error", {

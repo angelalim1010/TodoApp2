@@ -23,10 +23,7 @@ class Login extends Component{
 
     handleLogin = async(e) =>{
         e.preventDefault();
-        const user = {
-            username: this.state.username
-        }
-        await authLogin(user.username)
+        await authLogin(this.state.username)
         this.setState({redirect:true})
     }
 
