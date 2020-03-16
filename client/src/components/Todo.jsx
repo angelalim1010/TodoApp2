@@ -9,12 +9,13 @@ class Todo extends Component{
         this.state={
             username: this.props.username,
             todosArray: [],
-            content: ""
+            content: "",
+            completed: "Not Done"
         };
         this.renderTodos = this.renderTodos.bind(this);
         this.renderLogout = this.renderLogout.bind(this);
         this.handleNewTodo = this.handleNewTodo.bind(this);
-        this.refreshPage = this.refreshPage.bind(this);
+        // this.refreshPage = this.refreshPage.bind(this);
     }
     async componentDidMount(){
         let todos = await getTodo() || [];
@@ -22,9 +23,27 @@ class Todo extends Component{
             todosArray: todos.data
         })
     }
+    renderLogout = async ()=>{
+        await authLogout()
+    }
+
+    // refreshPage(){
+    //     window.location.reload();
+    // }
+
+    handleChange = async(e) => {
+        this.setState({
+          [e.target.name]: e.target.value
+        });
+      };
+
+    handleNewTodo = async(e)=>{
+        e.preventDefault();
+        await createNewTodo(this.state.content)
+        // this.refreshPage()    
+    }
     renderTodos = () =>{
         const data = this.state.todosArray;
-        if(data.length > 0){
             const todoList = data.map((todo)=>(
                 <div>
                     <div key={todo.id}>
@@ -41,6 +60,17 @@ class Todo extends Component{
                     </li>
                     </div>
                 <div>
+                    <p>Select the completion status of the todo</p>
+                    <form>
+                            <select select name="completed">
+                                <option value="Done">Done</option>
+						        <option value="Not Done">Not Done</option>
+                            </select>
+                        <button type="submit" onClick={()=>updateTodo(todo.id)}>Change Status</button>
+                    </form>
+                </div>
+		        <br/>
+                <div>
                     <form>
                         <input type="submit" value="Delete Todo" onClick={()=>deleteTodo(todo.id)}/>
                     </form>
@@ -50,36 +80,16 @@ class Todo extends Component{
               
                 ))
             return todoList;
-        }
-      else{
-          return;
-      }
+       
     }
 
-    renderLogout = async ()=>{
-        await authLogout()
-    }
-
-    refreshPage(){
-        window.location.reload();
-    }
-
-    handleChange = async(e) => {
-        this.setState({
-          [e.target.name]: e.target.value
-        });
-      };
-
-    handleNewTodo = async(e)=>{
-        e.preventDefault();
-        await createNewTodo(this.state.content)
-        this.refreshPage()    
-    }
+    
 
     render(){
         console.log("todos are:", this.state.todosArray)
         console.log("username in state is:", this.state.username)
         console.log("new todo is: ", this.state.content)
+        console.log("completed:", this.state.completed)
         return(
             <div>
                 <div>

@@ -89,10 +89,10 @@ router.post("/create", async(req, res, next)=>{
 
 //update todo, axios put but is a POST request
 
-router.post("/:id/update", async(req,res,next)=>{
+router.put("/:id/update", async(req,res,next)=>{
 	try {
 		if (req.signedCookies === undefined) {
-			res.render("error", {
+			res.json({
 				message: "Error. User not authenticated.",
 				error: { status: 401 }
 			});
@@ -107,7 +107,7 @@ router.post("/:id/update", async(req,res,next)=>{
 					completed: req.body.completed === "Done"
 				}
 			});
-			res.status(200).redirect("/todos");
+			res.status(200).json("update successful");
 		}
 	} catch (err) {
 		console.log(err);
@@ -116,7 +116,7 @@ router.post("/:id/update", async(req,res,next)=>{
 
 //delete todo by todo id
 //get request but axios delete
-router.get("/:id/delete", async(req,res,next)=>{
+router.delete("/:id/delete", async(req,res,next)=>{
 	try {
 		if (req.signedCookies === undefined) {
 			res.render("error", {
