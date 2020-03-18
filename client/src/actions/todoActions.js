@@ -26,13 +26,23 @@ export const createNewTodo = async(todo) =>{
   
 }
 
-export const updateTodo = async(todo)=>{
+export const updateTodo = async(todo_id, isCompleted)=>{
+    try{
+        console.log("waiting to update todo")
+        await axios.put(`/todos/${todo_id}/update`,{
+            completed: isCompleted
+        })
+        console.log("updated todo")
 
+    }
+    catch(e){
+        console.log(e.response)
+    }
 }
 
 export const deleteTodo = async(todo_id)=>{
     try{
-        await axios.get(`/todos/${todo_id}/delete`,{
+        await axios.delete(`/todos/${todo_id}/delete`,{
             id: todo_id
         })
     }
