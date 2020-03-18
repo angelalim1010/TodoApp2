@@ -4,20 +4,24 @@ import { getTodo, createNewTodo, updateTodo, deleteTodo } from "../actions/todoA
 import {authLogout} from "../actions/authActions";
 
 class Todo extends Component{
+    _isMounted = false;
     constructor(props){
         super(props);
         this.state={
             username: this.props.username,
             todosArray: [],
             content: "",
-            completed: "Not Done"
+            value: false
         };
         this.renderTodos = this.renderTodos.bind(this);
         this.renderLogout = this.renderLogout.bind(this);
         this.handleNewTodo = this.handleNewTodo.bind(this);
-        // this.refreshPage = this.refreshPage.bind(this);
+        this.handleValueChange = this.handleValueChange.bind(this);
+        this.handleUpdateTodo = this.handleUpdateTodo.bind(this);
+        this.handleDeleteTodo = this.handleDeleteTodo.bind(this)
     }
-    async componentDidMount(){
+    async componentWillMount(){
+        this._isMounted = true;
         let todos = await getTodo() || [];
         this.setState({
             todosArray: todos.data
@@ -32,16 +36,34 @@ class Todo extends Component{
     // }
 
     handleChange = async(e) => {
+        e.preventDefault();
         this.setState({
           [e.target.name]: e.target.value
         });
       };
-
+    handleValueChange = async(e)=>{
+        e.preventDefault();
+        this.setState({
+            value: e.target.value
+        })
+    }
     handleNewTodo = async(e)=>{
         e.preventDefault();
         await createNewTodo(this.state.content)
         // this.refreshPage()    
     }
+
+    handleUpdateTodo = async(e)=>{
+        e.preventDefault();
+        // await updateTodo( 1114,this.state.value)
+        console.log("pressed button")
+    }
+    
+    handleDeleteTodo = async(e)=>{
+        e.preventDefault();
+        await deleteTodo(e.id)
+    }
+
     renderTodos = () =>{
         const data = this.state.todosArray;
             const todoList = data.map((todo)=>(
@@ -57,22 +79,22 @@ class Todo extends Component{
                             deleted : {todo.deleted.toString()}
                         </li>
                         </ul>
-                    </li>
+                        </li>
                     </div>
                 <div>
                     <p>Select the completion status of the todo</p>
-                    <form>
-                            <select select name="completed">
+                    <form onSubmit={()=>updateTodo(todo.id, this.state.value)} >
+                            <select  onChange={this.handleValueChange}>
                                 <option value="Done">Done</option>
 						        <option value="Not Done">Not Done</option>
                             </select>
-                        <button type="submit" onClick={()=>updateTodo(todo.id)}>Change Status</button>
+                        <button type="submit" >Change Status</button>
                     </form>
                 </div>
 		        <br/>
                 <div>
-                    <form>
-                        <input type="submit" value="Delete Todo" onClick={()=>deleteTodo(todo.id)}/>
+                    <form onSubmit={()=>this.handleDeleteTodo(todo.id)}>
+                        <input type="submit" value="Delete Todo" />
                     </form>
                     </div>
                 
@@ -89,12 +111,11 @@ class Todo extends Component{
         console.log("todos are:", this.state.todosArray)
         console.log("username in state is:", this.state.username)
         console.log("new todo is: ", this.state.content)
-        console.log("completed:", this.state.completed)
+        console.log("completed:", this.state.value)
         return(
             <div>
                 <div>
                     <Link to ="/">Return to home</Link>
-                    <h1>{this.state.username}</h1>
                     <ul>{this.renderTodos()}</ul>
                     <Link to = "/" onClick={()=>this.renderLogout()}>Logout</Link>
                 </div>

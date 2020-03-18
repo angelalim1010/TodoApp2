@@ -64,7 +64,7 @@ router.get("/:id", async (req, res, next) => {
 router.post("/create", async(req, res, next)=>{
 	try {
 		if (req.signedCookies.Authentication === undefined) {
-			res.render("error", {
+			res.json("error", {
 				message: "Error. User not authenticated.",
 				error: { status: 401 }
 			});
@@ -79,7 +79,7 @@ router.post("/create", async(req, res, next)=>{
 					content: req.body.content
 				}
 			});
-			res.status(200).redirect("/todos");
+			res.status(200).json(data);
 		}
 	} catch (err) {
 		console.log(err);

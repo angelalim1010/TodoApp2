@@ -26,11 +26,11 @@ export const createNewTodo = async(todo) =>{
   
 }
 
-export const updateTodo = async(todo)=>{
+export const updateTodo = async(todo_id, isCompleted)=>{
     try{
         console.log("waiting to update todo")
-        await axios.put(`/todos/${todo}/update`,{
-            id: todo
+        await axios.put(`/todos/${todo_id}/update`,{
+            completed: isCompleted
         })
         console.log("updated todo")
 
