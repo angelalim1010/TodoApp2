@@ -47,9 +47,9 @@ router.post("/", async(req,res,next)=>{
 		res.status(200).json({ username: req.body.username });
 	}catch(err){
 		if (err.response.status === 400) {
-			res.render("error", {
+			res.json( {
 				message: "Error. User already exists. Please login",
-				error: { status: 400 }
+				error: err
 			})
 		}
 		console.log(err);

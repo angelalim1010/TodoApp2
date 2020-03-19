@@ -120,7 +120,7 @@ router.delete("/:id/delete", async(req,res,next)=>{
 	console.log("/delete")
 	try {
 		if (req.signedCookies === undefined) {
-			res.render("error", {
+			res.json({
 				message: "Error. User not authenticated.",
 				error: { status: 401 }
 			});
