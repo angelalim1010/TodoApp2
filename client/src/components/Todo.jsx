@@ -19,12 +19,20 @@ class Todo extends Component{
         this.handleValueChange = this.handleValueChange.bind(this);
         this.refreshPage = this.refreshPage.bind(this)
     }
-    async componentWillMount(){
+
+    fetchTodos(){
+        getTodo().then(res=>{
+            this.setState({todosArray:res.data})
+        });
+    }
+
+    componentDidMount(){
         this._isMounted = true;
-        let todos = await getTodo() || [];
-        this.setState({
-            todosArray: todos.data
-        })
+        // let todos = getTodo() || [];
+        // this.setState({
+        //     todosArray: todos.data
+        // })
+        this.fetchTodos()
     }
     renderLogout = async ()=>{
         await authLogout()
