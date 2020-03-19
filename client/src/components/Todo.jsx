@@ -19,14 +19,12 @@ class Todo extends Component{
         this.handleValueChange = this.handleValueChange.bind(this);
         this.refreshPage = this.refreshPage.bind(this)
     }
-    componentDidMount(){
+    async componentWillMount(){
         this._isMounted = true;
-        fetch(getTodo()).then(
-            res=>{ this.setState({
-                todosArray: res.json
-            })}
-        )
-       
+        let todos = await getTodo() || [];
+        this.setState({
+            todosArray: todos.data
+        })
     }
     renderLogout = async ()=>{
         await authLogout()
