@@ -116,7 +116,7 @@ class Todo extends Component{
             <div>
                 <div>
                     <Link to ="/">Return to home</Link>
-                    <ul>{this.renderTodos()}</ul>
+                    <br></br>
                     <Link to = "/" onClick={()=>this.renderLogout()}>Logout</Link>
                 </div>
                 <div>
@@ -132,6 +132,9 @@ class Todo extends Component{
                     </label>
                     <input type="submit" value="Submit" onClick={this.handleNewTodo}/>            
                     </form>
+                </div>
+                <div>
+                    <ul>{this.renderTodos()}</ul>
                 </div>
             </div>
            
