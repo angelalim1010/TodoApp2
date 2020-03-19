@@ -42,9 +42,13 @@ export const updateTodo = async(todo_id, isCompleted)=>{
 
 export const deleteTodo = async(todo_id)=>{
     try{
+        console.log("waiting to delete")
+
         await axios.delete(`/todos/${todo_id}/delete`,{
             id: todo_id
         })
+        console.log("delete successful")
+
     }
     catch(e){
         console.log(e.response)

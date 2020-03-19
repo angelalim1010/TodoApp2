@@ -79,7 +79,7 @@ router.post("/create", async(req, res, next)=>{
 					content: req.body.content
 				}
 			});
-			res.status(200).json(data);
+			res.status(200).json("create sucessful");
 		}
 	} catch (err) {
 		console.log(err);
@@ -117,6 +117,7 @@ router.put("/:id/update", async(req,res,next)=>{
 //delete todo by todo id
 //get request but axios delete
 router.delete("/:id/delete", async(req,res,next)=>{
+	console.log("/delete")
 	try {
 		if (req.signedCookies === undefined) {
 			res.render("error", {
@@ -130,7 +131,10 @@ router.delete("/:id/delete", async(req,res,next)=>{
 				}
 			});
 			res.status(200).json("delete successful");
+			console.log("/delete successful")
+
 		}
+		
 	} catch (err) {
 		console.log(err);
 	}
